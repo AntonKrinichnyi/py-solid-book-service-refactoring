@@ -23,11 +23,13 @@ SERIALIZER_STRATEGIES: dict[str, Type[Serializer]] = {
 
 
 def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
-    for cmd, method_type in commands:
+    for cmd, method_type in commands.sort():
         if cmd == "display":
             DISPLAY_STRATEGIES[method_type]().display(book.content)
+            
         elif cmd == "print":
             PRINT_STRATEGIES[method_type]().print_book(book)
+            
         elif cmd == "serialize":
             return SERIALIZER_STRATEGIES[method_type]().serialize(book)
 
